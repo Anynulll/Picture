@@ -101,5 +101,11 @@ def service_worker():
     return send_from_directory('static', 'service-worker.js')
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if name == "main":
+    from threading import Thread
+
+    # Flaskアプリを別スレッドで実行
+    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': int(os.getenv('PORT', 8080))})
+    flask_thread.start()
+
+    # Discordボットをメインスレッドで実行
