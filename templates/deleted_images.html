@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最近削除した画像</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .image-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .image-item {
+            margin: 10px;
+            position: relative;
+            text-align: center; /* 画像の下のボタンを中央揃え */
+        }
+
+        .image-thumbnail {
+            width: 200px; /* 画像のサイズを調整 */
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            display: flex; /* フレックスボックスを使ってボタンを横並びに */
+            justify-content: center; /* ボタンを中央揃え */
+            margin-top: 5px; /* ボタン間のスペース */
+        }
+
+        .delete-button, .restore-button {
+            background-color: #d9534f; /* 削除ボタンの色 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 5px; /* ボタン間のスペース */
+        }
+
+        .restore-button {
+            background-color: #5cb85c; /* 復帰ボタンの色 */
+        }
+
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+
+        .restore-button:hover {
+            background-color: #4cae4c;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #5bc0de;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .back-button:hover {
+            background-color: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>最近削除した画像</h1>
+        <div class="image-list">
+            {% if images %}
+                {% for image in images %}
+                    <div class="image-item">
+                        <img src="{{ image }}" alt="削除された画像" class="image-thumbnail">
+                        <div class="button-container"> <!-- ボタンを横並びにするためのコンテナ -->
+                            <form action="{{ url_for('delete_permanently', index=loop.index0) }}" method="post" style="display:inline;">
+                                <button type="submit" class="delete-button">完全に削除</button>
+                            </form>
+                            <form action="{{ url_for('restore_image', index=loop.index0) }}" method="post" style="display:inline;">
+                                <button type="submit" class="restore-button">復帰</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>最近削除した画像はありません。</p>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('home') }}" class="back-button">戻る</a>
+    </div>
+</body>
+</html>
