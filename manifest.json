@@ -1,0 +1,13 @@
+{
+    "short_name": "Picture Gallery",
+    "name": "PWAサンプルアプリケーション",
+    "display": "standalone",
+    "start_url": "templates/home.html",
+    "icons": [
+        {
+            "src": "static/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
